@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # ── MongoDB ──
+  mongo:
+    image: mongo:7
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: the69army
+
+  # ── Backend API + Socket.io ──
+  server:
+    build: ./server
+    restart: always
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/the69army
+
+  # ── Discord Bot ──
+  bot:
+    build: ./bot
+    restart: always
+    depends_on:
+      - mongo
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/the69army
+
+volumes:
+  mongo-data:

@@ -1,0 +1,19 @@
+{
+  "name": "the69army-arena",
+  "version": "1.0.0",
+  "description": "The69Army Gaming Arena - OSRS Gamble Site",
+  "private": true,
+  "scripts": {
+    "setup": "cd client && npm install && cd ../server && npm install && cd ../bot && npm install",
+    "dev": "concurrently -n CLIENT,SERVER,BOT -c cyan,green,magenta \"cd client && npm run dev\" \"cd server && npm run dev\" \"cd bot && npm run dev\"",
+    "dev:no-bot": "concurrently -n CLIENT,SERVER -c cyan,green \"cd client && npm run dev\" \"cd server && npm run dev\"",
+    "build": "cd client && npm run build",
+    "start": "concurrently -n SERVER,BOT -c green,magenta \"cd server && npm start\" \"cd bot && npm start\"",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
